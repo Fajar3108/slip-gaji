@@ -10,13 +10,13 @@
                         <div class="card-header m-0 row">
                             <div class="col-6">
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formUser" onclick="createModal({{ $role }})">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formUser" onclick="createModal()">
                                 Create
                                 </button>
                                 <button class="btn btn-success">Import</button>
                             </div>
                             <div class="col-6">
-                                <form class="d-flex" action="{{ route('user.search', $role->slug) }}">
+                                <form class="d-flex" action="{{ route('user.search') }}">
                                     <input type="text" class="form-control" placeholder="search here.." id="searchUserInput" name="keyword">
                                     <button type="submit" class="btn btn-primary" id="searchButton">Search</button>
                                 </form>
@@ -29,19 +29,36 @@
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>Email</th>
+                                        <th>Position</th>
+                                        <th>NIK</th>
+                                        <th>Role</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="dataUsers">
                                     <?php $id = $users->currentPage() > 1 ? ($users->currentPage() - 1) * $users->perPage() + 1 : 1; ?>
                                     @if ($users->count() <= 0)
-                                    <tr><td colspan="4" class="h2 p-4 text-center m-0">Not Found</td></tr>
+                                    <tr><td colspan="7" class="h2 p-4 text-center m-0">Not Found</td></tr>
                                     @endif
                                     @foreach ($users as $user)
                                     <tr>
                                         <td>{{ $id++ }}</td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>
+                                        <div>
+                                            <select name="role" id="role" class="form-select">
+                                                @foreach (App\Models\Role::all() as $role)
+                                                <option value="{{ $role->id }}" @if($user->role->slug === $role->slug) selected @endif>{{ $role->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('role')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                        </td>
                                         <td>
                                             <form action="{{ route('user.destroy', $user->id) }}" method="POST" class="row">
                                                 @csrf
@@ -83,6 +100,17 @@
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
+            <div class="mt-3" id="inputRole">
+                <label for="role" class="form-label">Role</label>
+                <select name="role" id="role" class="form-select">
+                    @foreach (App\Models\Role::all() as $role)
+                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                    @endforeach
+                </select>
+                @error('role')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
+            </div>
             <div class="mt-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" name="email" id="email">
@@ -109,11 +137,12 @@
         if (!result) event.preventDefault();
     }
 
-    const createModal = (role) => {
+    const createModal = () => {
         document.querySelector('#formUserLabel').textContent = "Create";
-        form.action = `/role/${role.slug}/user`;
+        form.action = `/user`;
         name.value = '';
         email.value = '';
+        inputRole.classList.remove('d-none');
     }
 
     const editModal = (user) => {
@@ -121,11 +150,13 @@
         form.action = `/user/${user.id}`;
         name.value = user.name;
         email.value = user.email;
+        inputRole.classList.add('d-none');
     }
 
     // Variabel Declaration
     const name = document.querySelector('#name');
     const email = document.querySelector('#email');
+    const inputRole = document.querySelector('#inputRole');
     const form = document.querySelector('#userForm');
 </script>
 

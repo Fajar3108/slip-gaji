@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
-use App\Models\Role;
-use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\View\ViewName;
+use App\Models\{Role, User};
+use Illuminate\Support\Str;
 use Throwable;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        $users = User::latest()->paginate(10);
+
+        return view('user.index', compact('users'));
+    }
+
     public function profile()
     {
         return view('auth.profile');
@@ -30,25 +34,26 @@ class UserController extends Controller
         }
     }
 
-    public function search(Role $role)
+    public function search()
     {
         $keyword = request()->keyword;
-
 
         // $role = Role::where('slug', $slug)->first();
         if (!$keyword) return back();
 
-        $users = $role->users()->where('name', 'LIKE', '%' . $keyword . '%')->orWhere('email', 'LIKE', '%' . $keyword . '%')->latest()->paginate(10);
+        $users = User::where('name', 'LIKE', '%' . $keyword . '%')->orWhere('email', 'LIKE', '%' . $keyword . '%')->latest()->paginate(10);
 
         // $users = User::with('role')->whereHas('role', function($query) use ($slug){
         //     $query->where('slug', $slug);
         // })->where('name', 'LIKE', '%' . $keyword . '%')->orWhere('email', 'LIKE', '%' . $keyword . '%')->latest()->paginate(10);
 
-        return view('user.index', compact('users', 'role'));
+        return view('user.index', compact('users'));
     }
 
-    public function store(Role $role, UserRequest $request)
+    public function store(UserRequest $request)
     {
+        $role = Role::find($request->role);
+
         $role->users()->create([
             'name' => $request->name,
             'email' => $request->email,
@@ -64,7 +69,6 @@ class UserController extends Controller
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
-            'email_verified_at' => now(),
         ]);
 
         return back();

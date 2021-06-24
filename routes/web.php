@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{UserController, RoleController};
+use App\Http\Controllers\{UserController, RoleController, SalaryController};
 
 /*
 |--------------------------------------------------------------------------
@@ -18,16 +18,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::view('home', 'home')->name('home');
 
     Route::get('/profile', [UserController::class, 'profile']);
 
     Route::delete('user/{user:id}', [UserController::class, 'destroy'])->name('user.destroy');
     Route::post('user/{user:id}', [UserController::class, 'update'])->name('user.update');
+    Route::get('user', [UserController::class, 'index'])->name('user.index');
+    Route::post('/user', [UserController::class, 'store'])->name('user.store');
+    Route::get('user/search', [UserController::class, 'search'])->name('user.search');
 
-    Route::post('role/{role:slug}/user', [UserController::class, 'store'])->name('user.store');
-    Route::get('role/{role:slug}/search', [UserController::class, 'search'])->name('user.search');
 
     Route::resource('role', RoleController::class)->only('show');
+
+    Route::resource('salary', SalaryController::class);
+    Route::post('salary/import', [SalaryController::class, 'import'])->name('salary.import');
 });
