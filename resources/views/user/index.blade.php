@@ -30,7 +30,7 @@
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>NIK</th>
-                                        <th>Role</th>
+                                        <th>Role / Position</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -45,18 +45,7 @@
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->nik }}</td>
-                                        <td>
-                                        <div>
-                                            <select name="role" id="role" class="form-select">
-                                                @foreach (App\Models\Role::all() as $role)
-                                                <option value="{{ $role->id }}" @if($user->role->slug === $role->slug) selected @endif>{{ $role->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('role')
-                                                <small class="text-danger">{{ $message }}</small>
-                                            @enderror
-                                        </div>
-                                        </td>
+                                        <td>{{ $user->role->name }}</td>
                                         <td>
                                             <form action="{{ route('user.destroy', $user->id) }}" method="POST" class="row">
                                                 @csrf
@@ -100,11 +89,7 @@
             </div>
             <div class="mt-3" id="inputRole">
                 <label for="role" class="form-label">Role</label>
-                <select name="role" id="role" class="form-select">
-                    @foreach (App\Models\Role::all() as $role)
-                    <option value="{{ $role->id }}">{{ $role->name }}</option>
-                    @endforeach
-                </select>
+                <input type="text" class="form-control" name="role" id="role">
                 @error('role')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
@@ -113,6 +98,13 @@
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" name="email" id="email">
                 @error('email')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+            <div class="mt-3">
+                <label for="nik" class="form-label">Nik</label>
+                <input type="number" class="form-control" name="nik" id="nik">
+                @error('nik')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
@@ -140,7 +132,7 @@
         form.action = `/user`;
         name.value = '';
         email.value = '';
-        inputRole.classList.remove('d-none');
+        role.value = '';
     }
 
     const editModal = (user) => {
@@ -148,13 +140,15 @@
         form.action = `/user/${user.id}`;
         name.value = user.name;
         email.value = user.email;
-        inputRole.classList.add('d-none');
+        role.value = user.role.name;
+        nik.value = user.nik;
     }
 
     // Variabel Declaration
     const name = document.querySelector('#name');
     const email = document.querySelector('#email');
-    const inputRole = document.querySelector('#inputRole');
+    const role = document.querySelector('#role');
+    const nik = document.querySelector('#nik');
     const form = document.querySelector('#userForm');
 </script>
 

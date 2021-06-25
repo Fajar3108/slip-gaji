@@ -52,11 +52,15 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
-        $role = Role::find($request->role);
+        $role = Role::firstOrCreate(
+            ['slug' => Str::slug($request->role)],
+            ['name' => $request->role]
+        );
 
         $role->users()->create([
             'name' => $request->name,
             'email' => $request->email,
+            'nik' => $request->nik,
             'email_verified_at' => now(),
             'password' => bcrypt('password'),
         ]);
@@ -66,8 +70,15 @@ class UserController extends Controller
 
     public function update(User $user, UserRequest $request)
     {
+        $role = Role::firstOrCreate(
+            ['slug' => Str::slug($request->role)],
+            ['name' => $request->role]
+        );
+
         $user->update([
+            'role_id' => $role->id,
             'name' => $request->name,
+            'nik' => $request->nik,
             'email' => $request->email,
         ]);
 
