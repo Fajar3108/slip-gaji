@@ -16,7 +16,7 @@ class SalariesImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new Salary([
-            'user_id' => User::where('email', $row['email'])->first()->id,
+            'user_id' => User::where('nik', $row['nik'])->first()->id,
             'no' => $row['no'],
             'date' => $row['date'],
             'gaji_pokok' => $row['gaji_pokok'],
