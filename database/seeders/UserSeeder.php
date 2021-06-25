@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
             'role_id' => 1,
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
+            'nik' => 3271234567890123,
             'email_verified_at' => now(),
             'password' => bcrypt('password'), // password
             'remember_token' => '',

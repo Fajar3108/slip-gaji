@@ -26,6 +26,7 @@ class UserFactory extends Factory
             'role_id' => $roles[rand(0, count($roles) - 1)],
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
+            'nik' => $this->faker->unique()->numerify('################'),
             'email_verified_at' => now(),
             'password' => bcrypt('password'), // password
             'remember_token' => '',

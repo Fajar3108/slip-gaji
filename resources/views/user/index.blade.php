@@ -44,7 +44,7 @@
                                         <td>{{ $id++ }}</td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
-                                        <td>-</td>
+                                        <td>{{ $user->nik }}</td>
                                         <td>
                                         <div>
                                             <select name="role" id="role" class="form-select">
