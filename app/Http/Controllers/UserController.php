@@ -38,14 +38,9 @@ class UserController extends Controller
     {
         $keyword = request()->keyword;
 
-        // $role = Role::where('slug', $slug)->first();
         if (!$keyword) return back();
 
-        $users = User::where('name', 'LIKE', '%' . $keyword . '%')->orWhere('email', 'LIKE', '%' . $keyword . '%')->latest()->paginate(10);
-
-        // $users = User::with('role')->whereHas('role', function($query) use ($slug){
-        //     $query->where('slug', $slug);
-        // })->where('name', 'LIKE', '%' . $keyword . '%')->orWhere('email', 'LIKE', '%' . $keyword . '%')->latest()->paginate(10);
+        $users = User::where('name', 'LIKE', '%' . $keyword . '%')->orWhere('email', 'LIKE', '%' . $keyword . '%')->orWhere('nik', 'LIKE', '%' . $keyword . '%')->latest()->paginate(10);
 
         return view('user.index', compact('users'));
     }
