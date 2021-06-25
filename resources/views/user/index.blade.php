@@ -29,7 +29,6 @@
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        <th>Position</th>
                                         <th>NIK</th>
                                         <th>Role</th>
                                         <th>Action</th>
@@ -45,7 +44,6 @@
                                         <td>{{ $id++ }}</td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
-                                        <td>-</td>
                                         <td>-</td>
                                         <td>
                                         <div>
