@@ -10,9 +10,9 @@
                     <div class="card">
                         <div class="card-header m-0 row">
                             <div class="col-6">
-                                <button type="button" class="btn btn-primary">
+                                <a href="{{ route('salary.create') }}" class="btn btn-primary">
                                 Create
-                                </button>
+                                </a>
                                 <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importExcel">Import</button>
                             </div>
                             <div class="col-6">
@@ -35,22 +35,21 @@
                                     </tr>
                                 </thead>
                                 <tbody id="dataSalaries">
-                                    <?php $num = $salaries->currentPage() > 1 ? ($salaries->currentPage() - 1) * $salaries->perPage() + 1 : 1; ?>
                                     @if ($salaries->count() <= 0)
                                     <tr><td colspan="6" class="h2 p-4 text-center m-0">Not Found</td></tr>
                                     @endif
                                     @foreach ($salaries as $salary)
                                     <tr>
-                                        <td>{{ $num++ }}</td>
+                                        <td>{{ $salary->no }}</td>
                                         <td>{{ $salary->user->name }}</td>
                                         <td>Rp. {{ number_format($salary->gaji_pokok) }}</td>
                                         <td>Rp. {{ number_format($salary->pinjaman_karyawan) }}</td>
                                         <td class="text-success"><strong>Rp. {{ number_format($salary->gaji_pokok - $salary->pinjaman_karyawan) }}</strong></td>
                                         <td>
-                                            <form action="" method="POST" class="row">
+                                            <form action="{{ route('salary.destroy', $salary->id) }}" method="POST" class="row">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="button" class="col-6 btn btn-success btn-sm">Edit</button>
+                                                <a href="{{ route('salary.edit', $salary->id) }}" class="col-6 btn btn-success btn-sm">Edit</a>
                                                 <button type="submit" class="col-6 btn btn-danger btn-sm">Delete</button>
                                             </form>
                                         </td>
@@ -60,6 +59,7 @@
                             </table>
                         </div>
                         <div class="card-footer">
+                            {{ $salaries->links() }}
                         </div>
                     </div>
                 </div>

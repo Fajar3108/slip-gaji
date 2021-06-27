@@ -17,7 +17,7 @@
                 </a>
             </li>
 
-            <li class="sidebar-item @if(request()->is('salary')) active @endif">
+            <li class="sidebar-item @if(request()->is('salary*')) active @endif">
                 <a class="sidebar-link" href="{{ route('salary.index') }}">
                 <i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle">Salary</span>
                 </a>

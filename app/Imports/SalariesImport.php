@@ -15,6 +15,7 @@ class SalariesImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
+        if (!$row['nik']) return;
         return new Salary([
             'user_id' => User::where('nik', $row['nik'])->first()->id,
             'no' => $row['no'],

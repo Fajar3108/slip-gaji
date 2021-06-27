@@ -6,6 +6,7 @@ use App\Http\Requests\UserRequest;
 use App\Models\{Role, User};
 use Illuminate\Support\Str;
 use Throwable;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
@@ -24,12 +25,21 @@ class UserController extends Controller
     public function destroy($id)
     {
         try{
-            User::find($id)->delete();
-            toast('User deleted successfuly', 'success');
+            if (auth()->user()->id == $id) {
+                Alert::error('Error', 'Tidak bisa hapus diri sendiri');
+                return back();
+            }
+
+            $user = User::find($id);
+            $user->salaries()->delete();
+            $user->delete();
+
+            Alert::success('success', 'User deleted successfuly');
 
             return back();
         } catch(Throwable $e) {
-            toast($e, 'error');
+            dd($e);
+            Alert::error('Error', $e);
             return back();
         }
     }
@@ -60,6 +70,8 @@ class UserController extends Controller
             'password' => bcrypt('password'),
         ]);
 
+        Alert::success('success', 'User created successfuly');
+
         return back();
     }
 
@@ -76,6 +88,8 @@ class UserController extends Controller
             'nik' => $request->nik,
             'email' => $request->email,
         ]);
+
+        Alert::success('success', 'User updated successfuly');
 
         return back();
     }

@@ -33,5 +33,6 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::resource('role', RoleController::class)->only('show');
 
     Route::resource('salary', SalaryController::class);
+    Route::get('salary/search', [SalaryController::class, 'search'])->name('salary.search');
     Route::post('salary/import', [SalaryController::class, 'import'])->name('salary.import');
 });
