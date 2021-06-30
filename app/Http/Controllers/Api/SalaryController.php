@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Salary;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 

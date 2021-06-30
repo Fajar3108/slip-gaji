@@ -27,6 +27,17 @@
 @endsection
 
 @section('custom-scripts')
+<script>
+    const gajiPokok = document.getElementById('gajiPokok');
+    const tunjanganJabatan = document.getElementById('tunjanganJabatan');
+    const tunjanganKinerja = document.getElementById('tunjanganKinerja');
+    const tunjanganProject = document.getElementById('tunjanganProject');
+    const kehadiran = document.getElementById('kehadiran');
+    const jaminanKecelakaanKerja = document.getElementById('jaminanKecelakaanKerja');
+    const jaminanKematian = document.getElementById('jaminanKematian');
+    const jaminanHariTua = document.getElementById('jaminanHariTua');
+    const jaminanPensiun = document.getElementById('jaminanPensiun');
+</script>
 {{-- <script>
 document.addEventListener("DOMContentLoaded", function() {
     var date = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);

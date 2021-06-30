@@ -26,6 +26,10 @@
 @endsection
 
 @section('custom-scripts')
+<script>
+    const gajiPokok = document.getElementById('gajiPokok');
+    console.log(gajiPokok.innerHTML);
+</script>
 {{-- <script>
 document.addEventListener("DOMContentLoaded", function() {
     var date = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);
