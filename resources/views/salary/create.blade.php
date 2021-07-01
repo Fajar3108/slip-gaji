@@ -26,6 +26,7 @@
 @endsection
 
 @section('custom-scripts')
+    <script src="{{ asset('js/salary/create.js') }}" type="module"></script>
     <script>
         const gajiPokok = document.getElementById('gajiPokok');
         console.log(gajiPokok.innerHTML);
