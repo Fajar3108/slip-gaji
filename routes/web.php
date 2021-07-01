@@ -15,7 +15,7 @@ use App\Http\Controllers\{UserController, RoleController, SalaryController};
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('home');
 });
 
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {
