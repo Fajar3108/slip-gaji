@@ -36,4 +36,5 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::resource('salary', SalaryController::class);
     Route::get('salary/search', [SalaryController::class, 'search'])->name('salary.search');
     Route::post('salary/import', [SalaryController::class, 'import'])->name('salary.import');
+    Route::get('salary/{salary:id}/pdf', [SalaryController::class, 'print_pdf'])->name('salary.pdf');
 });

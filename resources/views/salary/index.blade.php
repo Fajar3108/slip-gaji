@@ -10,10 +10,10 @@
                     <div class="card">
                         <div class="card-header m-0 row">
                             <div class="col-6">
-                                <a href="{{ route('salary.create') }}" class="btn btn-primary">
+                                <a href="{{ route('salary.create') }}" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Create">
                                 Create
                                 </a>
-                                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importExcel">Import</button>
+                                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importExcel" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Import">Import</button>
                             </div>
                             <div class="col-6">
                                 <form class="d-flex" action="">
@@ -46,11 +46,14 @@
                                         <td>Rp. {{ number_format($salary->total_potongan()) }}</td>
                                         <td class="text-success"><strong>Rp. {{ number_format($salary->total_pendapatan() - $salary->total_potongan()) }}</strong></td>
                                         <td>
-                                            <form action="{{ route('salary.destroy', $salary->id) }}" method="POST" class="row">
+                                            <form action="{{ route('salary.destroy', $salary->id) }}" method="POST" class="d-flex">
                                                 @csrf
                                                 @method('DELETE')
-                                                <a href="{{ route('salary.edit', $salary->id) }}" class="col-6 btn btn-success btn-sm">Edit</a>
-                                                <button type="submit" class="col-6 btn btn-danger btn-sm">Delete</button>
+                                                <a href="{{ route('salary.pdf', $salary->id) }}" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Export PDF"><i data-feather="download"></i></a>
+
+                                                <a href="{{ route('salary.edit', $salary->id) }}" class="btn btn-success mx-1" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit"><i data-feather="edit"></i></a>
+
+                                                <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete" onclick="deleteConfirm(event)"><i data-feather="trash-2"></i></button>
                                             </form>
                                         </td>
                                     </tr>
@@ -94,4 +97,13 @@
         </div>
     </div>
 </main>
+@endsection
+
+@section('custom-scripts')
+    <script>
+        const deleteConfirm = (event) => {
+            const result = confirm('Are you sure');
+            if (!result) event.preventDefault();
+        }
+    </script>
 @endsection

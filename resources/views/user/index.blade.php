@@ -13,7 +13,7 @@
                                 Create
                                 </button>
                                 {{-- User Import --}}
-                                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn btn-success dropdown-toggle mx-1" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                     Import
                                 </button>
                                 <div class="dropdown-menu">

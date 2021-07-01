@@ -7,6 +7,7 @@ use App\Models\{Salary, User};
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\SalaryRequest;
 use RealRashid\SweetAlert\Facades\Alert;
+use PDF;
 
 class SalaryController extends Controller
 {
@@ -101,5 +102,12 @@ class SalaryController extends Controller
         ->latest()->paginate(10);
 
         return $salaries;
+    }
+
+    public function print_pdf(Salary $salary)
+    {
+        $pdf = PDF::loadview('salary/pdf', ['salary' => $salary]);
+
+        return $pdf->stream();
     }
 }
