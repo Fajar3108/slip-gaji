@@ -2,6 +2,7 @@
 /public/hot
 /public/storage
 /public/salary_file
+/public/user_file
 /storage/*.key
 /vendor
 .env

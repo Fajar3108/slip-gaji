@@ -7,6 +7,8 @@ use App\Models\{Role, User};
 use Illuminate\Support\Str;
 use Throwable;
 use RealRashid\SweetAlert\Facades\Alert;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\UsersImport;
 
 class UserController extends Controller
 {
@@ -90,6 +92,23 @@ class UserController extends Controller
         ]);
 
         Alert::success('success', 'User updated successfuly');
+
+        return back();
+    }
+
+    public function import()
+    {
+        $this->validate(request(), [
+			'file' => 'required|mimes:csv,xls,xlsx'
+		]);
+
+        $file = request()->file('file');
+        $file_name = rand().$file->getClientOriginalName();
+        $file->move('user_file', $file_name);
+
+        Excel::import(new UsersImport, public_path('/user_file/'.$file_name));
+
+        Alert::success('Success', 'Imported users successfuly');
 
         return back();
     }

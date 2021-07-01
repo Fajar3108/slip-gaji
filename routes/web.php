@@ -24,6 +24,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('/profile', [UserController::class, 'profile']);
 
     Route::delete('user/{user:id}', [UserController::class, 'destroy'])->name('user.destroy');
+    Route::post('/user/import', [UserController::class, 'import'])->name('user.import');
     Route::post('user/{user:id}', [UserController::class, 'update'])->name('user.update');
     Route::get('user', [UserController::class, 'index'])->name('user.index');
     Route::post('/user', [UserController::class, 'store'])->name('user.store');

@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Imports\SalariesImport;
-use App\Models\Salary;
+use App\Models\{Salary, User};
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\SalaryRequest;
-use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class SalaryController extends Controller

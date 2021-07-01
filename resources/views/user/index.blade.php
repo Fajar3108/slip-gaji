@@ -8,12 +8,28 @@
                 <div class="d-table-cell align-middle">
                     <div class="card">
                         <div class="card-header m-0 row">
-                            <div class="col-6">
-                                <!-- Button trigger modal -->
+                            <div class="col-6 d-flex">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formUser" onclick="createModal()">
                                 Create
                                 </button>
-                                <button class="btn btn-success">Import</button>
+                                {{-- User Import --}}
+                                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Import
+                                </button>
+                                <div class="dropdown-menu">
+                                    <form class="px-4 py-3" action="{{ route('user.import') }}" method="POST" aria-labelledby="dropdownMenuButton1" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="d-flex">
+                                            <div class="input-group">
+                                                <input type="file" name="file" required="required" class="form-control">
+                                            </div>
+                                            <button class="btn btn-success" type="submit" id="importButton">Submit</button>
+                                        </div>
+                                        @error('file')
+                                            <small class="text-danger mt-1">{{ $message }}</small>
+                                        @enderror
+                                    </form>
+                                </div>
                             </div>
                             <div class="col-6">
                                 <form class="d-flex" action="{{ route('user.search') }}">
