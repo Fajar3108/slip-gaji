@@ -1,6 +1,6 @@
 <div class="d-table-cell">
     <div class="card">
-        <div class="card-body">
+        <div class="card-body" id="preview-box">
             <table class="table table-bordered">
                 <tr>
                     <th colspan="2" class="bg-dark text-white">Pendapatan</th>
@@ -10,7 +10,7 @@
                     <td id="gajiPokok">Rp. {{ number_format($salary->gaji_pokok) ?? 0 }}</td>
                 </tr>
                 <tr>
-                    <td>Tunjangan Jabartan</td>
+                    <td>Tunjangan Jabatan</td>
                     <td id="tunjanganJabatan">Rp. {{ number_format($salary->tunjangan_jabatan) ?? 0 }}</td>
                 </tr>
                 <tr>
@@ -24,6 +24,10 @@
                 <tr>
                     <td>Kehadiran</td>
                     <td id="kehadiran">Rp. {{ number_format($salary->kehadiran) ?? 0 }}</td>
+                </tr>
+                <tr>
+                    <td>Lembur</td>
+                    <td id="lembur">Rp. {{ number_format($salary->lembur) ?? 0 }}</td>
                 </tr>
                 <tr>
                     <td colspan="2" class="bg-light">BPJS Ketenagakerjaan</td>
@@ -44,10 +48,6 @@
                     <td>&nbsp;&nbsp;&nbsp;Jaminan Pensiun (2%)</td>
                     <td id="jaminanPensiun">Rp. 0</td>
                 </tr>
-                <tr>
-                    <td>Lembur</td>
-                    <td id="lembur">Rp. {{ number_format($salary->lembur) ?? 0 }}</td>
-                </tr>
             </table>
             <table class="table table-bordered">
                 <tr>
@@ -55,18 +55,18 @@
                 </tr>
                 <tr>
                     <td>BPJS TK - Perusahaan</td>
-                    <td class="bpjsTKPerusahaan">Rp. 0</td>
+                    <td id="bpjsTKPerusahaan">Rp. 0</td>
                 </tr>
                 <tr>
                     <td colspan="2" class="bg-light">BPJS TK - Perusahaan</td>
                 </tr>
                 <tr>
                     <td>&nbsp;&nbsp;&nbsp;Jaminan Pensiun (1%)</td>
-                    <td id="jaminanPensiun2">Rp. 0</td>
+                    <td id="jaminanPensiunPotongan">Rp. 0</td>
                 </tr>
                 <tr>
                     <td>&nbsp;&nbsp;&nbsp;Jaminan Hari Tua (2%)</td>
-                    <td id="jaminanHariTua2">Rp. 0</td>
+                    <td id="jaminanHariTuaPotongan">Rp. 0</td>
                 </tr>
                 <tr>
                     <td colspan="2" class="bg-light">BPJS Kesehatan</td>
@@ -81,11 +81,11 @@
                 </tr>
                 <tr>
                     <td>Pinjaman Karyawan</td>
-                    <td class="pinjamanKaryawan">Rp. {{ number_format($salary->pinjaman_karyawan) ?? 0 }}</td>
+                    <td id="pinjamanKaryawan">Rp. {{ number_format($salary->pinjaman_karyawan) ?? 0 }}</td>
                 </tr>
                 <tr>
                     <td>PPH psl 21 - karyawan</td>
-                    <td class="pph">Rp. {{ number_format($salary->pph) ?? 0 }}</td>
+                    <td id="pph">Rp. {{ number_format($salary->pph) ?? 0 }}</td>
                 </tr>
             </table>
             <table class="table">

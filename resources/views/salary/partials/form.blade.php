@@ -49,16 +49,16 @@
 </div>
 
 <div class="mt-3">
-    <label for="kehadiran" class="form-label">Kehadiran</label>
-    <input type="number" name="kehadiran" id="kehadiran" class="form-control" value="{{ old('kehadiran') ?? $salary->kehadiran ?? 0 }}">
+    <label for="kehadiran_input" class="form-label">Kehadiran</label>
+    <input type="number" name="kehadiran" id="kehadiran_input" class="form-control" value="{{ old('kehadiran') ?? $salary->kehadiran ?? 0 }}">
     @error('kehadiran')
         <small class="text-danger">{{ $message }}</small>
     @enderror
 </div>
 
 <div class="mt-3">
-    <label for="lembur" class="form-label">Lembur</label>
-    <input type="number" name="lembur" id="lembur" class="form-control" value="{{ old('lembur') ?? $salary->lembur ?? 0 }}">
+    <label for="lembur_input" class="form-label">Lembur</label>
+    <input type="number" name="lembur" id="lembur_input" class="form-control" value="{{ old('lembur') ?? $salary->lembur ?? 0 }}">
     @error('lembur')
         <small class="text-danger">{{ $message }}</small>
     @enderror
@@ -73,8 +73,8 @@
 </div>
 
 <div class="mt-3">
-    <label for="pph" class="form-label">PPH</label>
-    <input type="number" name="pph" id="pph" class="form-control" value="{{ old('pph') ?? $salary->pph ?? 0 }}">
+    <label for="pph_input" class="form-label">PPH</label>
+    <input type="number" name="pph" id="pph_input" class="form-control" value="{{ old('pph') ?? $salary->pph ?? 0 }}">
     @error('pph')
         <small class="text-danger">{{ $message }}</small>
     @enderror
