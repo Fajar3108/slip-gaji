@@ -108,6 +108,6 @@ class SalaryController extends Controller
     {
         $pdf = PDF::loadview('salary/pdf', ['salary' => $salary]);
 
-        return $pdf->stream();
+        return $pdf->stream('slip-gaji');
     }
 }
