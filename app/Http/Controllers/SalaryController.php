@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Imports\SalariesImport;
-use App\Models\Salary;
+use App\Models\{Salary, User};
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\SalaryRequest;
-use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
+use PDF;
 
 class SalaryController extends Controller
 {
@@ -102,5 +102,12 @@ class SalaryController extends Controller
         ->latest()->paginate(10);
 
         return $salaries;
+    }
+
+    public function print_pdf(Salary $salary)
+    {
+        $pdf = PDF::loadview('salary/pdf', ['salary' => $salary]);
+
+        return $pdf->stream('slip-gaji');
     }
 }

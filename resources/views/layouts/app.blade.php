@@ -26,7 +26,7 @@
     @include('sweetalert::alert')
     @if(auth()->user())
     <div id="app" class="wrapper">
-        @include('layouts.sidebar');
+        @include('layouts.sidebar')
         @endif
 
         @if(auth()->user())

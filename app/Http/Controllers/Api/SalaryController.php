@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\Salary;
+use PDF;
 
 class SalaryController extends Controller
 {
@@ -22,5 +24,12 @@ class SalaryController extends Controller
         return response()->json([
             'message' => 'Not Found'
         ], 404);
+    }
+
+    public function print_pdf(Salary $salary)
+    {
+        $pdf = PDF::loadview('salary/pdf', ['salary' => $salary]);
+
+        return $pdf->stream('SlipGaji.pdf');
     }
 }
