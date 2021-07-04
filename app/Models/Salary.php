@@ -30,17 +30,19 @@ class Salary extends Model
 
     public function bpjs_ketenagakerjaan()
     {
+        $total_salary = $this->gaji_pokok + $this->tunjangan_jabatan + $this->tunjangan_kinerja;
         return
-        ((0.24 / 100) * ($this->gaji_pokok + $this->tunjangan_jabatan + $this->tunjangan_kinerja)) +
-        ((0.30 / 100) * ($this->gaji_pokok + $this->tunjangan_jabatan + $this->tunjangan_kinerja)) +
-        ((3.7 / 100) * ($this->gaji_pokok + $this->tunjangan_jabatan + $this->tunjangan_kinerja)) +
-        ((2 / 100) * ($this->gaji_pokok + $this->tunjangan_jabatan + $this->tunjangan_kinerja))
+        ((0.24 / 100) * $total_salary) +
+        ((0.30 / 100) * $total_salary) +
+        ((3.7 / 100) * $total_salary) +
+        ((2 / 100) * min($total_salary, 8754600))
         ;
     }
 
     public function bpjs_kesehatan()
     {
-        return (4 / 100) * ($this->gaji_pokok + $this->tunjangan_jabatan + $this->tunjangan_kinerja);
+        $total_salary = $this->gaji_pokok + $this->tunjangan_jabatan + $this->tunjangan_kinerja;
+        return (4 / 100) * min($total_salary, 12000000);
     }
 
     public function total_pendapatan()
@@ -57,12 +59,12 @@ class Salary extends Model
 
     public function total_potongan()
     {
-        return
-        $this->bpjs_ketenagakerjaan() +
-        (1 / 100) * ($this->gaji_pokok + $this->tunjangan_jabatan + $this->tunjangan_kinerja) +
-        (2 / 100) * ($this->gaji_pokok + $this->tunjangan_jabatan + $this->tunjangan_kinerja) +
+        $total_salary = $this->gaji_pokok + $this->tunjangan_jabatan + $this->tunjangan_kinerja;
+        return $this->bpjs_ketenagakerjaan() +
+        ((1 / 100) * min($total_salary, 8754600)) +
+        ((2 / 100) * $total_salary) +
         $this->bpjs_kesehatan() +
-        (1 / 100) * ($this->gaji_pokok + $this->tunjangan_jabatan + $this->tunjangan_kinerja) +
+        ((1 / 100) * min($total_salary, 12000000)) +
         $this->pinjaman_karyawan +
         $this->pph
         ;

@@ -41,6 +41,12 @@
     }
 </style>
 
+<?php
+    $total_salary = $salary->gaji_pokok + $salary->tunjangan_jabatan + $salary->tunjangan_kinerja;
+    $batas_atas_bpjs_ketenagakerjaan = 8754600;
+    $batas_atas_bpjs_kesehatan = 12000000;
+?>
+
 <div class="container">
 <div class="header">
     <h3>PT SOLUSI INTEK INDONESIA</h3>
@@ -75,7 +81,7 @@
         <th>Kehadiran</th>
         <td>Rp. {{ number_format($salary->kehadiran) }}</td>
         <th>Jaminan Pensiun (2%)</th>
-        <td>Rp. {{ number_format(2 / 100 * ($salary->gaji_pokok + $salary->tunjangan_jabatan + $salary->tunjangan_kinerja)) }}</td>
+        <td>Rp. {{ number_format((2 / 100) * min($total_salary, $batas_atas_bpjs_ketenagakerjaan)) }}</td>
     </tr>
 
     <tr>
@@ -83,9 +89,9 @@
         <th>Tunjangan Jabatan</th>
         <td>Rp. {{ number_format($salary->tunjangan_jabatan) }}</td>
         <th>Jaminan Kecelakaan (0.24%)</th>
-        <td>Rp. {{ number_format(0.24 / 100 * ($salary->gaji_pokok + $salary->tunjangan_jabatan + $salary->tunjangan_kinerja)) }}</td>
+        <td>Rp. {{ number_format((0.24 / 100) * $total_salary) }}</td>
         <th>BPJS Kesehatan (4%)</th>
-        <td>Rp. {{ number_format(4 / 100 * ($salary->gaji_pokok + $salary->tunjangan_jabatan + $salary->tunjangan_kinerja)) }}</td>
+        <td>Rp. {{ number_format($salary->bpjs_kesehatan()) }}</td>
     </tr>
 
     <tr>
@@ -93,7 +99,7 @@
         <th>Tunjangan Kinerja</th>
         <td>Rp. {{ number_format($salary->tunjangan_kinerja) }}</td>
         <th>Jaminan Kematian (0.30%)</th>
-        <td>Rp. {{ number_format(0.30 / 100 * ($salary->gaji_pokok + $salary->tunjangan_jabatan + $salary->tunjangan_kinerja)) }}</td>
+        <td>Rp. {{ number_format(0.30 / 100 * $total_salary) }}</td>
         <th>Lembur</th>
         <td>Rp. {{ number_format($salary->lembur) }}</td>
     </tr>
@@ -103,7 +109,7 @@
         <th>Tunjangan Project</th>
         <td>Rp. {{ number_format($salary->tunjangan_project) }}</td>
         <th>Jaminan Kematian (3.7%)</th>
-        <td>Rp. {{ number_format(3.7 / 100 * ($salary->gaji_pokok + $salary->tunjangan_jabatan + $salary->tunjangan_kinerja)) }}</td>
+        <td>Rp. {{ number_format(3.7 / 100 * $total_salary) }}</td>
     </tr>
 </table>
 
@@ -117,7 +123,7 @@
         <th>BPJS TK - Perusahaan</th>
         <td>Rp. {{ number_format($salary->bpjs_ketenagakerjaan()) }}</td>
         <th>Jaminan Hari Tua (2%)</th>
-        <td>Rp. {{ number_format(2 / 100 * ($salary->gaji_pokok + $salary->tunjangan_jabatan + $salary->tunjangan_kinerja)) }}</td>
+        <td>Rp. {{ number_format(2 / 100 * $total_salary) }}</td>
         <th>Pinjaman Karyawan</th>
         <td>Rp. {{ number_format($salary->pinjaman_karyawan) }}</td>
     </tr>
@@ -127,14 +133,14 @@
         <th>Ditanggung Perusahaan (4%)</th>
         <td>Rp. {{ number_format($salary->bpjs_kesehatan()) }}</td>
         <th>Ditanggung Karyawan (1%)</th>
-        <td>Rp. {{ number_format(1 / 100 * ($salary->gaji_pokok + $salary->tunjangan_jabatan + $salary->tunjangan_kinerja)) }}</td>
+        <td>Rp. {{ number_format(1 / 100 * min($total_salary, $batas_atas_bpjs_kesehatan)) }}</td>
     </tr>
     <tr>
         {{-- 3 --}}
         <th>PPH psl 21 - karyawan</th>
         <td>Rp. {{ number_format($salary->pph) }}</td>
         <th>Jaminan Pensiun (1%)</th>
-        <td>Rp. {{ number_format(1 / 100 * ($salary->gaji_pokok + $salary->tunjangan_jabatan + $salary->tunjangan_kinerja)) }}</td>
+        <td>Rp. {{ number_format(1 / 100 * min($total_salary, $batas_atas_bpjs_ketenagakerjaan)) }}</td>
     </tr>
 </table>
 
