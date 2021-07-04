@@ -29,6 +29,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('user', [UserController::class, 'index'])->name('user.index');
     Route::post('/user', [UserController::class, 'store'])->name('user.store');
     Route::get('user/search', [UserController::class, 'search'])->name('user.search');
+    Route::get('user/{user:id}', [UserController::class, 'show'])->name('user.show');
 
 
     Route::resource('role', RoleController::class)->only('show');
