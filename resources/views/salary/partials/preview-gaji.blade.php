@@ -7,27 +7,27 @@
                 </tr>
                 <tr>
                     <td>Gaji Pokok</td>
-                    <td id="gajiPokok">Rp. {{ number_format($salary->gaji_pokok) ?? 0 }}</td>
+                    <td id="gajiPokok">Rp. 0</td>
                 </tr>
                 <tr>
                     <td>Tunjangan Jabatan</td>
-                    <td id="tunjanganJabatan">Rp. {{ number_format($salary->tunjangan_jabatan) ?? 0 }}</td>
+                    <td id="tunjanganJabatan">Rp. 0</td>
                 </tr>
                 <tr>
                     <td>Tunjangan Kinerja</td>
-                    <td id="tunjanganKinerja">Rp. {{ number_format($salary->tunjangan_kinerja) ?? 0 }}</td>
+                    <td id="tunjanganKinerja">Rp. 0</td>
                 </tr>
                 <tr>
                     <td>Tunjangan Project</td>
-                    <td id="tunjanganProject">Rp. {{ number_format($salary->tunjangan_project) ?? 0 }}</td>
+                    <td id="tunjanganProject">Rp. 0</td>
                 </tr>
                 <tr>
                     <td>Kehadiran</td>
-                    <td id="kehadiran">Rp. {{ number_format($salary->kehadiran) ?? 0 }}</td>
+                    <td id="kehadiran">Rp. 0</td>
                 </tr>
                 <tr>
                     <td>Lembur</td>
-                    <td id="lembur">Rp. {{ number_format($salary->lembur) ?? 0 }}</td>
+                    <td id="lembur">Rp. 0</td>
                 </tr>
                 <tr>
                     <td colspan="2" class="bg-light">BPJS Ketenagakerjaan</td>
@@ -81,18 +81,18 @@
                 </tr>
                 <tr>
                     <td>Pinjaman Karyawan</td>
-                    <td id="pinjamanKaryawan">Rp. {{ number_format($salary->pinjaman_karyawan) ?? 0 }}</td>
+                    <td id="pinjamanKaryawan">Rp. 0</td>
                 </tr>
                 <tr>
                     <td>PPH psl 21 - karyawan</td>
-                    <td id="pph">Rp. {{ number_format($salary->pph) ?? 0 }}</td>
+                    <td id="pph">Rp. 0</td>
                 </tr>
             </table>
             <table class="table">
                 <thead class="bg-dark text-white">
                     <tr>
                         <th>Jumlah Gaji</th>
-                        <th id="jumlahGaji">Rp. {{ number_format($salary->total_pendapatan() - $salary->total_potongan()) ?? 0 }}</th>
+                        <th id="jumlahGaji">Rp. 0</th>
                     </tr>
                 </thead>
             </table>

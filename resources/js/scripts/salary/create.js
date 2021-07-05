@@ -149,6 +149,8 @@ const updatePreview = () => {
 };
 
 
+// INITIALIZE
+updatePreview();
 for(const item of getInputElmnts()) {
   item[1].addEventListener('input', updatePreview);
 };

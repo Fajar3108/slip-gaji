@@ -8,7 +8,7 @@
                 <div class="d-table-cell">
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('salary.update', $salary->id) }}" method="POST">
+                            <form action="{{ route('salary.update', $salary->id) }}" method="POST" id="input-form">
                                 @method('PATCH')
                                 @include('salary.partials.form')
 
@@ -27,28 +27,6 @@
 @endsection
 
 @section('custom-scripts')
-<script>
-    const gajiPokok = document.getElementById('gajiPokok');
-    const tunjanganJabatan = document.getElementById('tunjanganJabatan');
-    const tunjanganKinerja = document.getElementById('tunjanganKinerja');
-    const tunjanganProject = document.getElementById('tunjanganProject');
-    const kehadiran = document.getElementById('kehadiran');
-    const jaminanKecelakaanKerja = document.getElementById('jaminanKecelakaanKerja');
-    const jaminanKematian = document.getElementById('jaminanKematian');
-    const jaminanHariTua = document.getElementById('jaminanHariTua');
-    const jaminanPensiun = document.getElementById('jaminanPensiun');
-</script>
-{{-- <script>
-document.addEventListener("DOMContentLoaded", function() {
-    var date = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);
-    var defaultDate = date.getUTCFullYear() + "-" + (date.getUTCMonth() + 1) + "-" + date.getUTCDate();
-    document.getElementById("datetimepicker-dashboard").flatpickr({
-        inline: true,
-        prevArrow: "<span title=\"Previous month\">&laquo;</span>",
-        nextArrow: "<span title=\"Next month\">&raquo;</span>",
-        defaultDate: defaultDate
-    });
-});
-</script> --}}
+    <script src="{{ asset('js/scripts/salary/edit.js') }}" type="module"></script>
 @endsection
 
