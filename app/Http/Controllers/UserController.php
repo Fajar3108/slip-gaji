@@ -9,6 +9,7 @@ use Throwable;
 use RealRashid\SweetAlert\Facades\Alert;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UsersImport;
+use Illuminate\Support\Carbon;
 
 class UserController extends Controller
 {
@@ -17,6 +18,26 @@ class UserController extends Controller
         $users = User::latest()->paginate(10);
 
         return view('user.index', compact('users'));
+    }
+
+    public function show(User $user)
+    {
+        $salaries = [];
+
+        $year = now()->format('Y');
+
+        if (isset(request()->year)) {
+            $year = request()->year;
+        }
+
+        foreach ($user->salaries()->orderBy('date', 'DESC')->get() as $salary) {
+            $salary_date = Carbon::createFromFormat('Y-m-d', $salary->date);
+            if ($salary_date->format('Y') == $year) {
+                $salaries[] = $salary;
+            }
+        }
+
+        return view('user.show', compact('user', 'salaries'));
     }
 
     public function profile()

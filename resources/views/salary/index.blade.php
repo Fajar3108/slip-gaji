@@ -41,7 +41,7 @@
                                     @foreach ($salaries as $salary)
                                     <tr>
                                         <td>{{ $salary->no }}</td>
-                                        <td>{{ $salary->user->name }}</td>
+                                        <td><a href="{{ route('user.show', $salary->user->id) }}">{{ $salary->user->name }}</a></td>
                                         <td>Rp. {{ number_format($salary->total_pendapatan()) }}</td>
                                         <td>Rp. {{ number_format($salary->total_potongan()) }}</td>
                                         <td class="text-success"><strong>Rp. {{ number_format($salary->total_pendapatan() - $salary->total_potongan()) }}</strong></td>
