@@ -25,6 +25,7 @@ class UsersImport implements ToModel, WithHeadingRow
             'nik' => $row['nik'],
             'email' => $row['email'],
             'password' => bcrypt('password'),
+            'email_verified_at' => now(),
         ]);
     }
 }
