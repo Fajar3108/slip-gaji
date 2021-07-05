@@ -106,20 +106,23 @@ const getCalculatedValues = () => {
 
   values.set('bpjsTKPerusahaan', bpjsTK);
 
-  const idList = new Set([incomeIdList, outgoIdList]);
+  const idList = new Map([
+    ['income', incomeIdList],
+    ['outgo', outgoIdList]
+  ]);
+
   const total = new Map([
     ['income', 0],
     ['outgo', 0]
   ]);
 
-  idList.forEach(listItem => {
+  idList.forEach((listItem, keyList) => {
     listItem.forEach(item => {
-      const income = total.get('income');
-      const value  = values.get(item);
-      total.set('income', income + value);
+      total.set(keyList, total.get(keyList) + values.get(item));
     });
   });
 
+  console.log(total.get('income'), total.get('outgo'));
   total.set('salary', total.get('income') - total.get('outgo'));
   values.set('jumlahGaji', total.get('salary'));
   
