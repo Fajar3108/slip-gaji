@@ -18,6 +18,6 @@ class IsAdmin
     {
         if (auth()->user()->role->slug === 'admin') return $next($request);
 
-        abort(403);
+        return redirect()->route('unauthorized');
     }
 }

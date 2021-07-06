@@ -39,3 +39,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::post('salary/import', [SalaryController::class, 'import'])->name('salary.import');
     Route::get('salary/{salary:id}/pdf', [SalaryController::class, 'print_pdf'])->name('salary.pdf');
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::view('/unauthorized', 'user.unauthorized')->name('unauthorized');
+});
