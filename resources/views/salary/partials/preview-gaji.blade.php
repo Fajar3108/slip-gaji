@@ -48,6 +48,10 @@
                     <td>&nbsp;&nbsp;&nbsp;Jaminan Pensiun (2%)</td>
                     <td id="jaminanPensiun">Rp. 0</td>
                 </tr>
+                <tr>
+                    <td>BPJS Kesehatan (4%)</td>
+                    <td id="bpjsKesehatan">Rp. 0</td>
+                </tr>
             </table>
             <table class="table table-bordered">
                 <tr>

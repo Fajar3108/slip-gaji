@@ -47,7 +47,8 @@ const getIncomeIdList = () => {
     'jaminanKecelakaanKerja',
     'jaminanKematian',
     'jaminanHariTua',
-    'jaminanPensiun'
+    'jaminanPensiun',
+    'bpjsKesehatan'
   ])
 };
 
@@ -83,8 +84,8 @@ const getCalculatedValues = () => {
   values.set('pph', Number(inputValues.get('pph_input')));
 
   const mainSalary = (
-    values.get('gajiPokok') + 
-    values.get('tunjanganJabatan') + 
+    values.get('gajiPokok') +
+    values.get('tunjanganJabatan') +
     values.get('tunjanganKinerja')
   );
 
@@ -92,13 +93,14 @@ const getCalculatedValues = () => {
   values.set('jaminanKematian',           (0.30/100) * mainSalary);
   values.set('jaminanHariTua',            (3.7/100) * mainSalary);
   values.set('jaminanPensiun',            (2/100) * Math.min(mainSalary, pensiunLimit));
+  values.set('bpjsKesehatan',            (4/100) * Math.min(mainSalary, kesehatanLimit));
   values.set('jaminanPensiunPotongan',    (1/100) * Math.min(mainSalary, pensiunLimit));
   values.set('jaminanHariTuaPotongan',    (2/100) * mainSalary);
   values.set('BPJSDitanggungPerusahaan',  (4/100) * Math.min(mainSalary, kesehatanLimit));
   values.set('BPJSDitanggungKaryawan',    (1/100) * Math.min(mainSalary, kesehatanLimit));
 
   const bpjsTK = (
-    values.get('jaminanKecelakaanKerja') + 
+    values.get('jaminanKecelakaanKerja') +
     values.get('jaminanKematian') +
     values.get('jaminanHariTua') +
     values.get('jaminanPensiun')
@@ -125,7 +127,7 @@ const getCalculatedValues = () => {
   console.log(total.get('income'), total.get('outgo'));
   total.set('salary', total.get('income') - total.get('outgo'));
   values.set('jumlahGaji', total.get('salary'));
-  
+
   return values;
 };
 
@@ -145,7 +147,7 @@ const toIDR = (number) => {
 const updatePreview = () => {
   const previews = getPreviewElmnts();
   const values   = getCalculatedValues();
-  
+
   for(const [key, value] of values.entries()) {
     previews.get(key).innerText = toIDR(value);
   }
