@@ -16,8 +16,9 @@ class UserController extends Controller
     public function index()
     {
         $users = User::latest()->paginate(10);
+        $roles = Role::all();
 
-        return view('user.index', compact('users'));
+        return view('user.index', compact('users', 'roles'));
     }
 
     public function show(User $user)

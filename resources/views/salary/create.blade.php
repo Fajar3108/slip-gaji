@@ -7,6 +7,9 @@
             <div class="col-12 col-md-6 d-table mt-3">
                 <div class="d-table-cell">
                     <div class="card">
+                        <div class="card-header">
+                            <a href="{{ route('salary.index') }}"><- Back</a>
+                        </div>
                         <div class="card-body">
                             <form action="{{ route('salary.store') }}" method="POST" id="input-form">
                                 @include('salary.partials.form')

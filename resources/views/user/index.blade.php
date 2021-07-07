@@ -105,7 +105,12 @@
             </div>
             <div class="mt-3" id="inputRole">
                 <label for="role" class="form-label">Role</label>
-                <input type="text" class="form-control" name="role" id="role">
+                <input type="text" list="roles" class="form-control" name="role" id="role" autocomplete="off"/>
+                <datalist id="roles">
+                    @foreach ($roles as $role)
+                    <option>{{ $role->name }}</option>
+                    @endforeach
+                </datalist>
                 @error('role')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
