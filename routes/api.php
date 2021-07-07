@@ -18,6 +18,9 @@ Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('users/update-password', [AuthController::class, 'updatePassword']);
+    Route::post('users/update', [AuthController::class, 'update']);
+
     Route::get('salary', [SalaryController::class, 'show']);
     Route::get('salary/{salary:id}/pdf', [SalaryController::class, 'print_pdf']);
 });
