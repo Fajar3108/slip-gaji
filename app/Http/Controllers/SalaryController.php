@@ -29,7 +29,8 @@ class SalaryController extends Controller
     public function create()
     {
         return view('salary.create', [
-            'salary' => new Salary()
+            'salary' => new Salary(),
+            'users' => User::all(),
         ]);
     }
 
@@ -48,7 +49,8 @@ class SalaryController extends Controller
 
     public function edit(Salary $salary)
     {
-        return view('salary.edit', compact('salary'));
+        $users = User::all();
+        return view('salary.edit', compact('salary', 'users'));
     }
 
     public function update(Salary $salary, SalaryRequest $request)

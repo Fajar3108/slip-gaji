@@ -2,7 +2,12 @@
 
 <div>
     <label for="nik" class="form-label">NIK Karyawan</label>
-    <input type="text" name="nik" id="nik" class="form-control" value="{{ old('nik') ?? (isset($salary->user->nik) ? $salary->user->nik : '') }}">
+    <input type="text" list="users" name="nik" id="nik" class="form-control" value="{{ old('nik') ?? (isset($salary->user->nik) ? $salary->user->nik : '') }}" autocomplete="off">
+    <datalist id="users">
+        @foreach ($users as $user)
+        <option value="{{ $user->nik }}">{{ $user->name }}</option>
+        @endforeach
+    </datalist>
     @error('nik')
         <small class="text-danger">{{ $message }}</small>
     @enderror
