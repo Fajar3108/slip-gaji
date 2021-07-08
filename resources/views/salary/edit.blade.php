@@ -31,5 +31,11 @@
 
 @section('custom-scripts')
     <script src="{{ asset('js/scripts/salary/edit.js') }}" type="module"></script>
+    <script>
+    // Select 2 | User Search
+    $(document).ready(function() {
+        $('#userSearch').select2();
+    });
+    </script>
 @endsection
 

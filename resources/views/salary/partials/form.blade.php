@@ -1,13 +1,12 @@
 @csrf
 
 <div>
-    <label for="nik" class="form-label">NIK Karyawan</label>
-    <input type="text" list="users" name="nik" id="nik" class="form-control" value="{{ old('nik') ?? (isset($salary->user->nik) ? $salary->user->nik : '') }}" autocomplete="off">
-    <datalist id="users">
+    <label for="nik" class="form-label">Karyawan</label>
+    <select id="userSearch" name="nik" id="nik" class="form-select" autocomplete="off">
         @foreach ($users as $user)
-        <option value="{{ $user->nik }}">{{ $user->name }}</option>
+        <option value="{{ $user->nik }}">{{ $user->name }} | {{ $user->role->name }}</option>
         @endforeach
-    </datalist>
+    </select>
     @error('nik')
         <small class="text-danger">{{ $message }}</small>
     @enderror

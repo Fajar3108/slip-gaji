@@ -29,6 +29,12 @@
 @endsection
 
 @section('custom-scripts')
+    <script>
+    // Select 2 | User Search
+    $(document).ready(function() {
+        $('#userSearch').select2();
+    });
+    </script>
     <script src="{{ asset('js/scripts/salary/create.js') }}" type="module"></script>
 @endsection
 
