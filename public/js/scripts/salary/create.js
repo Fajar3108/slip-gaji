@@ -13,7 +13,7 @@ const getInputElmnts = () => {
 };
 
 for(const item of getInputElmnts()){
-  if (typeof item[1].type === 'text'){
+  if (item[1].type === 'text'){
     item[1].addEventListener('input', (e) => {
       if(e.data === ',') return;
     
