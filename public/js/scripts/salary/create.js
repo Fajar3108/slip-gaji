@@ -1,4 +1,5 @@
 import $ from '../utils/QuerySelectorHelper.js';
+import Currency from '../utils/CurrencyHelper.js';
 
 
 // GET INPUT ELEMENTS
@@ -10,6 +11,31 @@ const getInputElmnts = () => {
 
   return elmnts;
 };
+
+getInputElmnts().get('gaji_pokok').addEventListener('input', (e) => {
+  if(e.data === ',') return;
+
+  const elmnt               = e.target;
+  const { value, selectionStart, selectionEnd } = elmnt;
+  const validated           = value.replace(/[^0-9\.\,]/, '');
+  const diffValidatedLength = value.length - validated.length;
+  const cursorStart         = selectionStart - diffValidatedLength;
+  const number              = Currency.toNumber(validated);
+  const currencyValue       = Currency.fromNumber(number, {locales: 'id-ID'});
+  console.log(diffValidatedLength,cursorStart);
+  
+  elmnt.value = currencyValue;
+
+  if(selectionEnd === value.length) return;
+
+  const valueInFront    = currencyValue.slice(0, cursorStart);
+  const diffValueLength = valueInFront.length - value.length;
+  const range           = value.length + diffValueLength;
+  console.log(currencyValue.length, value.length);
+  console.log(diffValueLength, range);
+
+  elmnt.setSelectionRange(range,range);
+})
 
 
 // GET PREVIEW ELEMENTS
@@ -23,19 +49,21 @@ const getPreviewElmnts = () => {
 };
 
 
-// GET INPUT VALUES
+// GET INPUT VALUES   
 const getInputValues = () => {
   const values      = new Map();
   const inputElmnts = getInputElmnts();
 
   for(const [key, item] of inputElmnts) {
-    values.set(key, item.value);
+    const value = Currency.toNumber(item.value);
+    values.set(key, value);
   }
 
   return values;
 };
 
 
+// GET ID LIST OF INCOME PREVIEW
 const getIncomeIdList = () => {
   return new Set([
     'gajiPokok',
@@ -52,6 +80,8 @@ const getIncomeIdList = () => {
   ])
 };
 
+
+// GET ID LIST OF OUTGO PREVIEW
 const getOutgoIdList = () => {
   return new Set([
     'bpjsTKPerusahaan',
@@ -158,3 +188,4 @@ updatePreview();
 for(const item of getInputElmnts()) {
   item[1].addEventListener('input', updatePreview);
 };
+
