@@ -75,8 +75,9 @@ class UserController extends Controller
         if (!$keyword) return back();
 
         $users = User::where('name', 'LIKE', '%' . $keyword . '%')->orWhere('email', 'LIKE', '%' . $keyword . '%')->orWhere('nik', 'LIKE', '%' . $keyword . '%')->latest()->paginate(10);
+        $roles = Role::all();
 
-        return view('user.index', compact('users'));
+        return view('user.index', compact('users', 'roles'));
     }
 
     public function store(UserRequest $request)
