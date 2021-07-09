@@ -12,35 +12,6 @@ const getInputElmnts = () => {
   return elmnts;
 };
 
-for(const item of getInputElmnts()){
-  if (item[1].type === 'text'){
-    item[1].addEventListener('input', (e) => {
-      if(e.data === ',') return;
-    
-      const elmnt               = e.target;
-      const { value, selectionStart, selectionEnd } = elmnt;
-      const validated           = value.replace(/[^0-9\.\,]/, '');
-      const diffValidatedLength = value.length - validated.length;
-      const cursorStart         = selectionStart - diffValidatedLength;
-      const number              = Currency.toNumber(validated);
-      const currencyValue       = Currency.fromNumber(number, {locales: 'id-ID'});
-      console.log(diffValidatedLength,cursorStart);
-      
-      elmnt.value = currencyValue;
-    
-      if(selectionEnd === value.length) return;
-    
-      const valueInFront    = currencyValue.slice(0, cursorStart);
-      const diffValueLength = valueInFront.length - value.length;
-      const range           = value.length + diffValueLength;
-      console.log(currencyValue.length, value.length);
-      console.log(diffValueLength, range);
-    
-      elmnt.setSelectionRange(range,range);
-    });
-  }
-}
-
 
 // GET PREVIEW ELEMENTS
 const getPreviewElmnts = () => {
@@ -165,6 +136,29 @@ const getCalculatedValues = () => {
 };
 
 
+// VALUE INPUT ELEMENT TO CURRENCY FORMAT
+const valueToCurrencyHandler = (event) => {
+  if(event.data === ',') return;
+  
+  const elmnt               = event.target;
+  const { value, selectionStart, selectionEnd } = elmnt;
+  const validated           = value.replace(/[^0-9\.\,]/, '');
+  const diffValidatedLength = value.length - validated.length;
+  const cursorStart         = selectionStart - diffValidatedLength;
+  const number              = Currency.toNumber(validated);
+  const currencyValue       = Currency.fromNumber(number, {locales: 'id-ID'});
+  
+  elmnt.value = currencyValue;
+
+  if(selectionEnd === value.length) return;
+  const valueInFront    = currencyValue.slice(0, cursorStart);
+  const diffValueLength = valueInFront.length - value.length;
+  const range           = value.length + diffValueLength;
+
+  elmnt.setSelectionRange(range,range);
+}
+
+
 // CONVERT TO INDONESIAN CURRENCY FORMAT
 const toIDR = (number) => {
   return Intl.NumberFormat('id-ID', {
@@ -187,9 +181,25 @@ const updatePreview = () => {
 };
 
 
+// CURRENCY INPUT EVENT HANDLER
+const currencyInputHandler = (event) => {
+  updatePreview();
+  valueToCurrencyHandler(event);
+};
+
+
 // INITIALIZE
 updatePreview();
-for(const item of getInputElmnts()) {
-  item[1].addEventListener('input', updatePreview);
+for(const [key, item] of getInputElmnts()) {
+  if(item.classList.contains('currency-input')) {
+    item.addEventListener('input', currencyInputHandler);
+    item.addEventListener('focus', currencyInputHandler);
+    item.addEventListener('blur', () => {
+      item.value = Currency.toNumber(item.value);
+    })
+  }
+
+  item.addEventListener('input', updatePreview);
 };
+
 
