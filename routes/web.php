@@ -19,9 +19,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {
-    Route::view('home', 'home')->name('home');
-
-    Route::get('/profile', [UserController::class, 'profile']);
+    Route::get('/profile', [UserController::class, 'profile'])->name('home');
 
     Route::delete('user/{user:id}', [UserController::class, 'destroy'])->name('user.destroy');
     Route::post('/user/import', [UserController::class, 'import'])->name('user.import');
