@@ -13,30 +13,32 @@ const getInputElmnts = () => {
 };
 
 for(const item of getInputElmnts()){
-  item[1].addEventListener('input', (e) => {
-    if(e.data === ',') return;
-  
-    const elmnt               = e.target;
-    const { value, selectionStart, selectionEnd } = elmnt;
-    const validated           = value.replace(/[^0-9\.\,]/, '');
-    const diffValidatedLength = value.length - validated.length;
-    const cursorStart         = selectionStart - diffValidatedLength;
-    const number              = Currency.toNumber(validated);
-    const currencyValue       = Currency.fromNumber(number, {locales: 'id-ID'});
-    console.log(diffValidatedLength,cursorStart);
+  if (typeof item[1].type === 'text'){
+    item[1].addEventListener('input', (e) => {
+      if(e.data === ',') return;
     
-    elmnt.value = currencyValue;
-  
-    if(selectionEnd === value.length) return;
-  
-    const valueInFront    = currencyValue.slice(0, cursorStart);
-    const diffValueLength = valueInFront.length - value.length;
-    const range           = value.length + diffValueLength;
-    console.log(currencyValue.length, value.length);
-    console.log(diffValueLength, range);
-  
-    elmnt.setSelectionRange(range,range);
-  })
+      const elmnt               = e.target;
+      const { value, selectionStart, selectionEnd } = elmnt;
+      const validated           = value.replace(/[^0-9\.\,]/, '');
+      const diffValidatedLength = value.length - validated.length;
+      const cursorStart         = selectionStart - diffValidatedLength;
+      const number              = Currency.toNumber(validated);
+      const currencyValue       = Currency.fromNumber(number, {locales: 'id-ID'});
+      console.log(diffValidatedLength,cursorStart);
+      
+      elmnt.value = currencyValue;
+    
+      if(selectionEnd === value.length) return;
+    
+      const valueInFront    = currencyValue.slice(0, cursorStart);
+      const diffValueLength = valueInFront.length - value.length;
+      const range           = value.length + diffValueLength;
+      console.log(currencyValue.length, value.length);
+      console.log(diffValueLength, range);
+    
+      elmnt.setSelectionRange(range,range);
+    });
+  }
 }
 
 
