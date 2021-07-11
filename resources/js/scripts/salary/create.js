@@ -79,14 +79,14 @@ const getCalculatedValues = () => {
   const pensiunLimit    = 8754600;
   const kesehatanLimit  = 12000000;
 
-  values.set('gajiPokok', Number(inputValues.get('gaji_pokok')));
+  values.set('gajiPokok',        Number(inputValues.get('gaji_pokok')));
   values.set('tunjanganJabatan', Number(inputValues.get('tunjangan_jabatan')));
   values.set('tunjanganKinerja', Number(inputValues.get('tunjangan_kinerja')));
   values.set('tunjanganProject', Number(inputValues.get('tunjangan_project')));
-  values.set('kehadiran', Number(inputValues.get('kehadiran_input')));
-  values.set('lembur', Number(inputValues.get('lembur_input')));
+  values.set('kehadiran',        Number(inputValues.get('kehadiran_input')));
+  values.set('lembur',           Number(inputValues.get('lembur_input')));
   values.set('pinjamanKaryawan', Number(inputValues.get('pinjaman_karyawan')));
-  values.set('pph', Number(inputValues.get('pph_input')));
+  values.set('pph',              Number(inputValues.get('pph_input')));
 
   const mainSalary = (
     values.get('gajiPokok') +
@@ -143,19 +143,19 @@ const valueToCurrencyHandler = (event) => {
   const elmnt               = event.target;
   const { value, selectionStart, selectionEnd } = elmnt;
   const validated           = value.replace(/[^0-9\.\,]/, '');
-  const diffValidatedLength = value.length - validated.length;
-  const cursorStart         = selectionStart - diffValidatedLength;
   const number              = Currency.toNumber(validated);
   const currencyValue       = Currency.fromNumber(number, {locales: 'id-ID'});
   
   elmnt.value = currencyValue;
-
+  
   if(selectionEnd === value.length) return;
-  const valueInFront    = currencyValue.slice(0, cursorStart);
-  const diffValueLength = valueInFront.length - value.length;
-  const range           = value.length + diffValueLength;
+  const diffValidatedLength = currencyValue.length - validated.length;
+  const cursorStart         = selectionStart + diffValidatedLength;
+  const valueInFront        = currencyValue.slice(0, cursorStart);
+  const diffValueLength     = valueInFront.length - currencyValue.length;
+  const range               = currencyValue.length + diffValueLength;
 
-  elmnt.setSelectionRange(range,range);
+  elmnt.setSelectionRange(range, range);
 }
 
 
@@ -201,5 +201,3 @@ for(const [key, item] of getInputElmnts()) {
 
   item.addEventListener('input', updatePreview);
 };
-
-
