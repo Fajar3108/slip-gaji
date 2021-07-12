@@ -13,7 +13,10 @@
                                 <a href="{{ route('salary.create') }}" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Create">
                                 Create
                                 </a>
+
                                 <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importExcel" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Import">Import</button>
+
+                                <button type="submit" class="btn btn-danger disabled" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete All Selected" onclick="deleteConfirm(event)" id="massDelete"><i data-feather="trash-2"></i></button>
                             </div>
                             <div class="col-6">
                                 <form class="d-flex" action="">
@@ -108,7 +111,8 @@
             if (!result) event.preventDefault();
         }
 
-        const selectAll = document.getElementById('selectAll')
+        const selectAll = document.getElementById('selectAll');
+        const massDeleteBtn = document.getElementById('massDelete');
 
         selectAll.onclick = () => {
             const checkboxes = document.querySelectorAll('.check-id');
@@ -121,6 +125,21 @@
             const result = confirm('Are you sure');
             if (!result) event.preventDefault();
         }
+
+        const checkIds = () => {
+            const ids = document.querySelectorAll('.check-id');
+            for (const id of ids) {
+                if (id.checked) {
+                    massDeleteBtn.classList.remove('disabled');
+                    return;
+                }
+            }
+            massDeleteBtn.classList.add('disabled');
+        }
+
+        setInterval(() => {
+            checkIds();
+        }, 100)
 
     </script>
 @endsection
