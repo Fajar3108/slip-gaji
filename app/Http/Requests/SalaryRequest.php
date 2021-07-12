@@ -24,7 +24,7 @@ class SalaryRequest extends FormRequest
     public function rules()
     {
         return [
-            'nik' => ['required', 'digits:16'],
+            'nik' => ['required', 'min:4', 'max:8'],
             'no' => ['required'],
             'gaji_pokok' => ['required', 'numeric'],
             'tunjangan_jabatan' => ['required', 'numeric'],
@@ -34,7 +34,14 @@ class SalaryRequest extends FormRequest
             'lembur' => ['required', 'numeric'],
             'pinjaman_karyawan' => ['required', 'numeric'],
             'pph' => ['required', 'numeric'],
-            'date' => ['required', 'date']
+            'date' => ['required', 'date'],
+            'hari_masuk' => ['required', 'numeric'],
+            'hari_absen' => ['required', 'numeric'],
+            'telat_konfirmasi' => ['required', 'numeric'],
+            'telat_non_konfirmasi' => ['required', 'numeric'],
+            'sakit_ket_dokter' => ['required', 'numeric'],
+            'sakit_non_ket_dokter' => ['required', 'numeric'],
+            'izin' => ['required', 'numeric'],
         ];
     }
 }

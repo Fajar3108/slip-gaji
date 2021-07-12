@@ -25,6 +25,15 @@ class CreateSalariesTable extends Migration
             $table->integer('lembur');
             $table->integer('pinjaman_karyawan');
             $table->integer('pph');
+            // Absensi
+            $table->integer('hari_masuk');
+            $table->integer('hari_absen');
+            $table->integer('telat_konfirmasi');
+            $table->integer('telat_non_konfirmasi');
+            $table->integer('sakit_ket_dokter');
+            $table->integer('sakit_non_ket_dokter');
+            $table->integer('izin');
+
             $table->date('date');
             $table->timestamps();
         });

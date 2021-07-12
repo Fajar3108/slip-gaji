@@ -10,17 +10,12 @@ class Salary extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'no',
-        'gaji_pokok',
-        'tunjangan_jabatan',
-        'tunjangan_kinerja',
-        'tunjangan_project',
-        'kehadiran',
-        'lembur',
-        'pinjaman_karyawan',
-        'pph',
-        'date',
+        'user_id', 'no', 'gaji_pokok',
+        'tunjangan_jabatan', 'tunjangan_kinerja', 'tunjangan_project',
+        'kehadiran', 'lembur', 'pinjaman_karyawan', 'pph',
+        'hari_masuk', 'hari_absen', 'telat_konfirmasi',
+        'telat_non_konfirmasi', 'sakit_ket_dokter', 'sakit_non_ket_dokter',
+        'izin', 'date',
     ];
 
     public function user()
