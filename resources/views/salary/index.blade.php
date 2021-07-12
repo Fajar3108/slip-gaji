@@ -122,11 +122,11 @@
         }
 
         const massDelete = (event) => {
-            const result = confirm('Are you sure');
+            const result = confirm('Are you sure ?');
             if (!result) event.preventDefault();
         }
 
-        const checkIds = () => {
+        const isAnyChecked = () => {
             const ids = document.querySelectorAll('.check-id');
             for (const id of ids) {
                 if (id.checked) {
@@ -137,9 +137,21 @@
             massDeleteBtn.classList.add('disabled');
         }
 
+        const isSelectAll = () => {
+            const ids = document.querySelectorAll('.check-id');
+            for (const id of ids) {
+                if (!id.checked) {
+                    selectAll.checked = false;
+                    return;
+                }
+            }
+            selectAll.checked = true;
+        }
+
         setInterval(() => {
-            checkIds();
-        }, 100)
+            isSelectAll();
+            isAnyChecked();
+        }, 100);
 
     </script>
 @endsection

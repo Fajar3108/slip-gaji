@@ -82,15 +82,14 @@ class SalaryController extends Controller
     public function massDestroy(Request $request)
     {
         if (!isset($request->ids)) {
-            Alert::error('Error', 'please select at least one data you want to delete');
-        } else {
-            foreach ($request->ids as $id) {
-                Salary::where('id', $id)->delete();
-            }
-            Alert::success('Success', 'Salaries deleted successfuly');
+            return response()->json([
+                'message' => "please select at least one data you want to delete"
+            ], 404);
         }
 
-        return redirect()->back();
+        $ids = $request->ids;
+        Salary::whereIn('id', explode(',', $ids))->delete();
+        return response()->json(['message '=>"Salaries Deleted successfully."]);
     }
 
     public function import()
