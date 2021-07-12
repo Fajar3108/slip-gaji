@@ -26,6 +26,7 @@
                             <table class="table table-hover my-0" id="salariesTable">
                                 <thead class="bg-light">
                                     <tr>
+                                        <th><input type="checkbox" id="selectAll" class="form-check-input"></th>
                                         <th>#</th>
                                         <th>Nama</th>
                                         <th>Total Pendapatan</th>
@@ -40,6 +41,7 @@
                                     @endif
                                     @foreach ($salaries as $salary)
                                     <tr>
+                                        <td><input type="checkbox" name="ids[]" class="form-check-input check-id"></td>
                                         <td>{{ $salary->no }}</td>
                                         <td><a href="{{ route('user.show', $salary->user->id) }}">{{ $salary->user->name }}</a></td>
                                         <td>Rp. {{ number_format($salary->total_pendapatan()) }}</td>
@@ -105,5 +107,20 @@
             const result = confirm('Are you sure');
             if (!result) event.preventDefault();
         }
+
+        const selectAll = document.getElementById('selectAll')
+
+        selectAll.onclick = () => {
+            const checkboxes = document.querySelectorAll('.check-id');
+            for (const checkbox of checkboxes) {
+                checkbox.checked = selectAll.checked;
+            }
+        }
+
+        const massDelete = (event) => {
+            const result = confirm('Are you sure');
+            if (!result) event.preventDefault();
+        }
+
     </script>
 @endsection
