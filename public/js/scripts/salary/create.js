@@ -12,35 +12,6 @@ const getInputElmnts = () => {
   return elmnts;
 };
 
-for(const item of getInputElmnts()){
-  if (typeof item[1].type === 'text'){
-    item[1].addEventListener('input', (e) => {
-      if(e.data === ',') return;
-    
-      const elmnt               = e.target;
-      const { value, selectionStart, selectionEnd } = elmnt;
-      const validated           = value.replace(/[^0-9\.\,]/, '');
-      const diffValidatedLength = value.length - validated.length;
-      const cursorStart         = selectionStart - diffValidatedLength;
-      const number              = Currency.toNumber(validated);
-      const currencyValue       = Currency.fromNumber(number, {locales: 'id-ID'});
-      console.log(diffValidatedLength,cursorStart);
-      
-      elmnt.value = currencyValue;
-    
-      if(selectionEnd === value.length) return;
-    
-      const valueInFront    = currencyValue.slice(0, cursorStart);
-      const diffValueLength = valueInFront.length - value.length;
-      const range           = value.length + diffValueLength;
-      console.log(currencyValue.length, value.length);
-      console.log(diffValueLength, range);
-    
-      elmnt.setSelectionRange(range,range);
-    });
-  }
-}
-
 
 // GET PREVIEW ELEMENTS
 const getPreviewElmnts = () => {
@@ -108,14 +79,14 @@ const getCalculatedValues = () => {
   const pensiunLimit    = 8754600;
   const kesehatanLimit  = 12000000;
 
-  values.set('gajiPokok', Number(inputValues.get('gaji_pokok')));
+  values.set('gajiPokok',        Number(inputValues.get('gaji_pokok')));
   values.set('tunjanganJabatan', Number(inputValues.get('tunjangan_jabatan')));
   values.set('tunjanganKinerja', Number(inputValues.get('tunjangan_kinerja')));
   values.set('tunjanganProject', Number(inputValues.get('tunjangan_project')));
-  values.set('kehadiran', Number(inputValues.get('kehadiran_input')));
-  values.set('lembur', Number(inputValues.get('lembur_input')));
+  values.set('kehadiran',        Number(inputValues.get('kehadiran_input')));
+  values.set('lembur',           Number(inputValues.get('lembur_input')));
   values.set('pinjamanKaryawan', Number(inputValues.get('pinjaman_karyawan')));
-  values.set('pph', Number(inputValues.get('pph_input')));
+  values.set('pph',              Number(inputValues.get('pph_input')));
 
   const mainSalary = (
     values.get('gajiPokok') +
@@ -165,6 +136,29 @@ const getCalculatedValues = () => {
 };
 
 
+// VALUE INPUT ELEMENT TO CURRENCY FORMAT
+const valueToCurrencyHandler = (event) => {
+  if(event.data === ',') return;
+  
+  const elmnt               = event.target;
+  const { value, selectionStart, selectionEnd } = elmnt;
+  const validated           = value.replace(/[^0-9\.\,]/, '');
+  const number              = Currency.toNumber(validated);
+  const currencyValue       = Currency.fromNumber(number, {locales: 'id-ID'});
+  
+  elmnt.value = currencyValue;
+  
+  if(selectionEnd === value.length) return;
+  const diffValidatedLength = currencyValue.length - validated.length;
+  const cursorStart         = selectionStart + diffValidatedLength;
+  const valueInFront        = currencyValue.slice(0, cursorStart);
+  const diffValueLength     = valueInFront.length - currencyValue.length;
+  const range               = currencyValue.length + diffValueLength;
+
+  elmnt.setSelectionRange(range, range);
+}
+
+
 // CONVERT TO INDONESIAN CURRENCY FORMAT
 const toIDR = (number) => {
   return Intl.NumberFormat('id-ID', {
@@ -187,9 +181,23 @@ const updatePreview = () => {
 };
 
 
-// INITIALIZE
-updatePreview();
-for(const item of getInputElmnts()) {
-  item[1].addEventListener('input', updatePreview);
+// CURRENCY INPUT EVENT HANDLER
+const currencyInputHandler = (event) => {
+  updatePreview();
+  valueToCurrencyHandler(event);
 };
 
+
+// INITIALIZE
+updatePreview();
+for(const [key, item] of getInputElmnts()) {
+  if(item.classList.contains('currency-input')) {
+    item.addEventListener('input', currencyInputHandler);
+    item.addEventListener('focus', currencyInputHandler);
+    item.addEventListener('blur', () => {
+      item.value = Currency.toNumber(item.value);
+    })
+  }
+
+  item.addEventListener('input', updatePreview);
+};
