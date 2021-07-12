@@ -12,6 +12,61 @@
     @enderror
 </div>
 
+<div class="card w-100 border mt-3 py-3">
+  <h5 class="card-header py-0 h4 mb-3">Absensi</h5>
+  <div class="card-body py-0">
+        <div>
+            <label for="hari_masuk" class="form-label">Hari Masuk</label>
+            <input type="number" name="hari_masuk" id="hari_masuk" class="form-control" value="{{ old('hari_masuk') ?? $salary->hari_masuk ?? 0 }}">
+            @error('hari_masuk')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+        <div class="mt-3">
+            <label for="hari_absen" class="form-label">Hari Absen</label>
+            <input type="number" name="hari_absen" id="hari_absen" class="form-control" value="{{ old('hari_absen') ?? $salary->hari_absen ?? 0 }}">
+            @error('hari_absen')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+        <div class="mt-3">
+            <label for="telat_konfirmasi" class="form-label">Telat Konfirmasi</label>
+            <input type="number" name="telat_konfirmasi" id="telat_konfirmasi" class="form-control" value="{{ old('telat_konfirmasi') ?? $salary->telat_konfirmasi ?? 0 }}">
+            @error('telat_konfirmasi')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+        <div class="mt-3">
+            <label for="telat_non_konfirmasi" class="form-label">Telat Non Konfirmasi</label>
+            <input type="number" name="telat_non_konfirmasi" id="telat_non_konfirmasi" class="form-control" value="{{ old('telat_non_konfirmasi') ?? $salary->telat_non_konfirmasi ?? 0 }}">
+            @error('telat_non_konfirmasi')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+        <div class="mt-3">
+            <label for="sakit_ket_dokter" class="form-label">Sakit Keterangan Dokter</label>
+            <input type="number" name="sakit_ket_dokter" id="sakit_ket_dokter" class="form-control" value="{{ old('sakit_ket_dokter') ?? $salary->sakit_ket_dokter ?? 0 }}">
+            @error('sakit_ket_dokter')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+        <div class="mt-3">
+            <label for="sakit_non_ket_dokter" class="form-label">Sakit Non Keterangan Dokter</label>
+            <input type="number" name="sakit_non_ket_dokter" id="sakit_non_ket_dokter" class="form-control" value="{{ old('sakit_non_ket_dokter') ?? $salary->sakit_non_ket_dokter ?? 0 }}">
+            @error('sakit_non_ket_dokter')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+        <div class="mt-3">
+            <label for="izin" class="form-label">Izin</label>
+            <input type="number" name="izin" id="izin" class="form-control" value="{{ old('izin') ?? $salary->izin ?? 0 }}">
+            @error('izin')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+  </div>
+</div>
+
 <div class="mt-3">
     <label for="no" class="form-label">NO Slip</label>
     <input type="text" name="no" id="no" class="form-control" value="{{ old('no') ?? $salary->no }}">

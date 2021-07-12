@@ -6,6 +6,7 @@ use App\Imports\SalariesImport;
 use App\Models\{Salary, User};
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\SalaryRequest;
+use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use PDF;
 
@@ -76,6 +77,19 @@ class SalaryController extends Controller
         Alert::success('Success', 'Deleted salary successfuly');
 
         return back();
+    }
+
+    public function massDestroy(Request $request)
+    {
+        if (!isset($request->ids)) {
+            return response()->json([
+                'message' => "please select at least one data you want to delete"
+            ], 404);
+        }
+
+        $ids = $request->ids;
+        Salary::whereIn('id', explode(',', $ids))->delete();
+        return response()->json(['message '=>"Salaries Deleted successfully."]);
     }
 
     public function import()

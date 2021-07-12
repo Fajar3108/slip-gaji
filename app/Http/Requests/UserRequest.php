@@ -28,7 +28,7 @@ class UserRequest extends FormRequest
             'name' => ['required', 'min:3'],
             'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($this->user)],
             'role' => ['required'],
-            'nik' => ['required', 'digits:16', Rule::unique('users', 'email')->ignore($this->user)]
+            'nik' => ['required','min:4', 'max:8', Rule::unique('users', 'email')->ignore($this->user)]
         ];
     }
 }

@@ -124,7 +124,7 @@
             </div>
             <div class="mt-3">
                 <label for="nik" class="form-label">Nik</label>
-                <input type="number" class="form-control" name="nik" id="nik">
+                <input type="text" class="form-control" name="nik" id="nik">
                 @error('nik')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
