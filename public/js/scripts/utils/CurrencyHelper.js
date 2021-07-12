@@ -25,12 +25,18 @@ const Currency = {
   },
 
 
-  toNumber(value) {
+  toNumber(value, {
+    groupSign,
+    decimalSign,
+  } = {}) {
     const comaIndex = value.indexOf(',');
-    const dotIndex  = value.indexOf('.');
+    const dotIndex  = value.indexOf('.');    
     
-    if(comaIndex < dotIndex && comaIndex !== -1 || dotIndex === -1)
-      return this.comaGroupingToNumber(value);
+    if( groupSign === ',' || 
+        decimalSign === '.' || 
+        (comaIndex < dotIndex && comaIndex !== -1) || 
+        dotIndex === -1
+    ) return this.comaGroupingToNumber(value);
 
     return this.dotGroupingToNumber(value);
   },
