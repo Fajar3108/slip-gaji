@@ -24,3 +24,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('salary', [SalaryController::class, 'show']);
     Route::get('salary/{salary:id}/pdf', [SalaryController::class, 'print_pdf']);
 });
+
+Route::delete('salary', [SalaryController::class, 'massDestroy'])->middleware('auth');

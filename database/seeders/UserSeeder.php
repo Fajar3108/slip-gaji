@@ -17,10 +17,10 @@ class UserSeeder extends Seeder
         User::create([
             'role_id' => 1,
             'name' => 'Admin',
-            'email' => 'admin@gmail.com',
+            'email' => 'admin@intek.co.id',
             'nik' => '123admin',
             'email_verified_at' => now(),
-            'password' => bcrypt('password'), // password
+            'password' => bcrypt('t3rk3n4l1234'),
             'remember_token' => '',
         ]);
     }
