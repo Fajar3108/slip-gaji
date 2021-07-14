@@ -30,7 +30,7 @@ const getInputValues = () => {
   const inputElmnts = getInputElmnts();
 
   for(const [key, item] of inputElmnts) {
-    const value = Currency.toNumber(item.value);
+    const value = Currency.toNumber(item.value, {decimalSign: ','});
     values.set(key, value);
   }
 
@@ -138,15 +138,23 @@ const getCalculatedValues = () => {
 
 // VALUE INPUT ELEMENT TO CURRENCY FORMAT
 const valueToCurrencyHandler = (event) => {
-  if(event.data === ',') return;
+  const { target, type }  = event;
+  const { value }         = target;
+  const locales           = 'id-ID';
+  const decimalSign       = ',';
   
-  const elmnt               = event.target;
-  const { value, selectionStart, selectionEnd } = elmnt;
+  if(event.data === ',' && value[value.length-1] === ',') return;
+  if(type === 'focus') {
+    const currencyValue = Currency.fromNumber(value, {locales});
+    return target.value = currencyValue;
+  }
+  
+  const { selectionStart, selectionEnd } = target;
   const validated           = value.replace(/[^0-9\.\,]/, '');
-  const number              = Currency.toNumber(validated);
-  const currencyValue       = Currency.fromNumber(number, {locales: 'id-ID'});
+  const numberValue         = Currency.toNumber(validated, {decimalSign});
+  const currencyValue       = Currency.fromNumber(numberValue, {locales});
   
-  elmnt.value = currencyValue;
+  target.value = currencyValue;
   
   if(selectionEnd === value.length) return;
   const diffValidatedLength = currencyValue.length - validated.length;
@@ -155,7 +163,7 @@ const valueToCurrencyHandler = (event) => {
   const diffValueLength     = valueInFront.length - currencyValue.length;
   const range               = currencyValue.length + diffValueLength;
 
-  elmnt.setSelectionRange(range, range);
+  target.setSelectionRange(range, range);
 }
 
 
@@ -183,8 +191,8 @@ const updatePreview = () => {
 
 // CURRENCY INPUT EVENT HANDLER
 const currencyInputHandler = (event) => {
-  updatePreview();
   valueToCurrencyHandler(event);
+  updatePreview();
 };
 
 
@@ -194,8 +202,9 @@ for(const [key, item] of getInputElmnts()) {
   if(item.classList.contains('currency-input')) {
     item.addEventListener('input', currencyInputHandler);
     item.addEventListener('focus', currencyInputHandler);
-    item.addEventListener('blur', () => {
-      item.value = Currency.toNumber(item.value);
+    item.addEventListener('blur', (event) => {
+      const { target } = event;
+      target.value = Currency.toNumber(target.value, {decimalSign: ','});
     })
   }
 
