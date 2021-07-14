@@ -30,6 +30,8 @@
                                         @enderror
                                     </form>
                                 </div>
+
+                                <button type="submit" class="btn btn-danger disabled" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete All Selected" onclick="deleteConfirm(event)" id="massDelete"><i data-feather="trash-2"></i></button>
                             </div>
                             <div class="col-6">
                                 <form class="d-flex" action="{{ route('user.search') }}">
@@ -42,6 +44,7 @@
                             <table class="table table-hover my-0" id="usersTable">
                                 <thead class="bg-light">
                                     <tr>
+                                        <th><input type="checkbox" id="selectAll" class="form-check-input"></th>
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>Email</th>
@@ -51,13 +54,14 @@
                                     </tr>
                                 </thead>
                                 <tbody id="dataUsers">
-                                    <?php $id = $users->currentPage() > 1 ? ($users->currentPage() - 1) * $users->perPage() + 1 : 1; ?>
+                                    <?php $key = $users->currentPage() > 1 ? ($users->currentPage() - 1) * $users->perPage() + 1 : 1; ?>
                                     @if ($users->count() <= 0)
                                     <tr><td colspan="7" class="h2 p-4 text-center m-0">Not Found</td></tr>
                                     @endif
                                     @foreach ($users as $user)
                                     <tr>
-                                        <td>{{ $id++ }}</td>
+                                        <td><input type="checkbox" name="ids[]" class="form-check-input check-id"></td>
+                                        <td>{{ $key++ }}</td>
                                         <td><a href="{{ route('user.show', $user->id) }}">{{ $user->name }}</a></td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->nik }}</td>
@@ -164,6 +168,48 @@
         role.value = user.role.name;
         nik.value = user.nik;
     }
+
+    const selectAll = document.getElementById('selectAll');
+    const massDeleteBtn = document.getElementById('massDelete');
+
+    selectAll.onclick = () => {
+        const checkboxes = document.querySelectorAll('.check-id');
+        for (const checkbox of checkboxes) {
+            checkbox.checked = selectAll.checked;
+        }
+    }
+
+    const massDelete = (event) => {
+        const result = confirm('Are you sure ?');
+        if (!result) event.preventDefault();
+    }
+
+    const isAnyChecked = () => {
+        const ids = document.querySelectorAll('.check-id');
+        for (const id of ids) {
+            if (id.checked) {
+                massDeleteBtn.classList.remove('disabled');
+                return;
+            }
+        }
+        massDeleteBtn.classList.add('disabled');
+    }
+
+    const isSelectAll = () => {
+        const ids = document.querySelectorAll('.check-id');
+        for (const id of ids) {
+            if (!id.checked) {
+                selectAll.checked = false;
+                return;
+            }
+        }
+        selectAll.checked = true;
+    }
+
+    setInterval(() => {
+        isSelectAll();
+        isAnyChecked();
+    }, 100);
 
     // Variabel Declaration
     const name = document.querySelector('#name');

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\{AuthController, SalaryController};
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 Route::delete('salary', [SalaryController::class, 'massDestroy'])->middleware('auth');
+Route::delete('user', [UserController::class, 'massDestroy'])->middleware('auth');
