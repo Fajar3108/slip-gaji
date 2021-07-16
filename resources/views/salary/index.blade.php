@@ -16,7 +16,7 @@
 
                                 <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importExcel" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Import">Import</button>
 
-                                <button type="submit" class="btn btn-danger disabled" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete All Selected" onclick="deleteConfirm(event)" id="massDelete"><i data-feather="trash-2"></i></button>
+                                <button type="submit" class="btn btn-danger disabled" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete All Selected" id="massDelete"><i data-feather="trash-2"></i></button>
                             </div>
                             <div class="col-6">
                                 <form class="d-flex" action="">
@@ -43,8 +43,8 @@
                                     <tr><td colspan="6" class="h2 p-4 text-center m-0">Not Found</td></tr>
                                     @endif
                                     @foreach ($salaries as $salary)
-                                    <tr>
-                                        <td><input type="checkbox" name="ids[]" class="form-check-input check-id"></td>
+                                    <tr id="salary-{{ $salary->id }}">
+                                        <td><input data-id="{{ $salary->id }}"  type="checkbox" name="ids[]" class="form-check-input check-id"></td>
                                         <td>{{ $salary->no }}</td>
                                         <td><a href="{{ route('user.show', $salary->user->id) }}">{{ $salary->user->name }}</a></td>
                                         <td>Rp. {{ number_format($salary->total_pendapatan()) }}</td>
@@ -105,53 +105,5 @@
 @endsection
 
 @section('custom-scripts')
-    <script>
-        const deleteConfirm = (event) => {
-            const result = confirm('Are you sure');
-            if (!result) event.preventDefault();
-        }
-
-        const selectAll = document.getElementById('selectAll');
-        const massDeleteBtn = document.getElementById('massDelete');
-
-        selectAll.onclick = () => {
-            const checkboxes = document.querySelectorAll('.check-id');
-            for (const checkbox of checkboxes) {
-                checkbox.checked = selectAll.checked;
-            }
-        }
-
-        const massDelete = (event) => {
-            const result = confirm('Are you sure ?');
-            if (!result) event.preventDefault();
-        }
-
-        const isAnyChecked = () => {
-            const ids = document.querySelectorAll('.check-id');
-            for (const id of ids) {
-                if (id.checked) {
-                    massDeleteBtn.classList.remove('disabled');
-                    return;
-                }
-            }
-            massDeleteBtn.classList.add('disabled');
-        }
-
-        const isSelectAll = () => {
-            const ids = document.querySelectorAll('.check-id');
-            for (const id of ids) {
-                if (!id.checked) {
-                    selectAll.checked = false;
-                    return;
-                }
-            }
-            selectAll.checked = true;
-        }
-
-        setInterval(() => {
-            isSelectAll();
-            isAnyChecked();
-        }, 100);
-
-    </script>
+<script src="{{ asset('js/scripts/salary/index.js') }}" type="module"></script>
 @endsection
